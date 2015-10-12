@@ -38,6 +38,13 @@ module.exports = {
 		'- Garantir que não existe nenhuma exceção suprimida (todas as promises devem ter catch ou estar aninhadas e capturar as exceções dos códigos síncronos)',
 		
 		'Referências:',
-		'Redemption form callback hell: https://www.youtube.com/watch?v=hf1T_AONQJU&feature=youtu.be'
+		'Redemption form callback hell: https://www.youtube.com/watch?v=hf1T_AONQJU&feature=youtu.be',
+		'http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D',
+		'https://blog.domenic.me/youre-missing-the-point-of-promises/',
+		'http://know.cujojs.com/tutorials/async/mastering-async-error-handling-with-promises.html.md',
+		'http://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html',
+		'https://gist.github.com/jpsoroulas/62668ade41e981a4d7a5',
+		'https://www.promisejs.org/implementing/',
+		'https://promisesaplus.com/'
 	]
 };
