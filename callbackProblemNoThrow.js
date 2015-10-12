@@ -28,4 +28,5 @@ try {
 	console.log("Não priemos cânico, está tudo sob controle.");
 }
 
-// Callback hell ou pyramid of doom
+// O que acontece aqui?
+// Alguém pode explicar o fluxo desse script?

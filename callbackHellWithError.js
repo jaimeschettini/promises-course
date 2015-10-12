@@ -6,6 +6,7 @@ async.operation('operation 1', function (value) {
 		console.log(value2);
 		async.operation('operation 3', function (value3) {
 			console.log(value3);
+			// Como podemos capturar este erro?
 			throw Error("Um erro aconteceu!");
 
 			async.operation('operation 4', function (value4) {
