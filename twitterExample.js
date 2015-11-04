@@ -11,7 +11,6 @@ getUser('bob esponja', function(user) {
 });
 
 // Usando promises
-
 getUser('bob esponja')
 	.then(getNewTweets)
 	.then(updateTimeline);

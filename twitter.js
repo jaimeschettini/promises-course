@@ -18,20 +18,13 @@ var getFriends = function (username) {
 	return d.promise;
 };
 
-var simplify = function (users) {
-	return users.map(function(user) {
+var simplifyUsers = function (data) {
+	return data.users.map(function(user) {
 		return { 
-			id: user.id, 
 			name: user.name,
 			screen_name: user.screen_name,
 			followers_count: user.followers_count
 		};
-	});
-};
-
-var simplifyTweets = function (tweets) {
-	return tweets.map(function(tweet) {
-		return tweet.text;
 	});
 };
 
@@ -41,26 +34,37 @@ var sortByFollowers = function (friends) {
 	});
 };
 
+var getTop3 = function (friends) {
+	var top3 = friends.slice(0, 2);
+	console.log('\nTop 3 amigos por seguidores:\n', top3);
+	return top3;
+};
 
-var getTweets = function (screenName) {
+var getFirst = function (friends) {
+	var first = friends[0];
+	console.log("\nAmigo com mais seguidores:", { nome: first.name, seguidores: first.followers_count }, '\n');
+	return first;
+};
+
+var getTweets = function (user) {
 	var d = Q.defer();
-	T.get('statuses/user_timeline', { screen_name: screenName, count: 10 }, function(err, data, response) {
+	T.get('statuses/user_timeline', { screen_name: user.screen_name, count: 10 }, function(err, data, response) {
 		d.resolve(data);
 	});
 	return d.promise;
 };
 
-getFriends('jaimeschettini')
-.then(function(data) {
-	var friends = simplify(data.users);
-	friends = sortByFollowers(friends).slice(0,4);
-	console.log('Sorted by followers', friends);
+var simplifyTweets = function (tweets) {
+	return tweets.map(function(tweet) {
+		return tweet.text;
+	});
+};
 
-	var friend = friends[0];
-	console.log("Amigo com mais seguidores:", friend);
-	return friend;
-}).then(function(friend) {
-	return getTweets(friend.screen_name);
-}).then(function(tweets) {
-	console.log(simplifyTweets(tweets));
-});
+getFriends('jaimeschettini')
+.then(simplifyUsers)
+.then(sortByFollowers)
+.then(getTop3)
+.then(getFirst)
+.then(getTweets)
+.then(simplifyTweets)
+.then(console.log);
