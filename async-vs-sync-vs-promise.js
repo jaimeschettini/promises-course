@@ -1,13 +1,16 @@
+// Síncrono
 var user = getUser('bob esponja');
-var name = user.name;
+var tweets = getNewTweets(user);
+updateTimeline(tweets);
 
-
+// Usando callbacks
 getUser('bob esponja', function(user) {
-	var name = user.name;
+	getNewTweets(user, function(tweets) {
+		updateTimeline(tweets);
+	})
 });
 
-
-getUser('bob esponja').then(function(user) {
-	var name = user.name;
-	// return user.name?
-});
+// Usando promises
+getUser('bob esponja')
+	.then(getNewTweets)
+	.then(updateTimeline);
