@@ -25,7 +25,7 @@ function getPromiseRejected(reason) {
 /* Se retornar um valor em um handler, a promessa de fora será cumprida com o valor retornado, 
 ou seja, o valor é passado para a próxima promessa. */
 function encadeamento1() {
-    // getPromiseFulfilled()
+    getPromiseFulfilled()
     .then(function() {
         console.log('Irei retornar um valor');
         return 'Javascript';
@@ -191,9 +191,34 @@ function excecao2() {
 
 
 
-
-/* Se lançar uma exceção em um handler, a promessa será rejeitada. */
+/* Chamar .done() para relançar a exceção caso ninguém a capture. */
 function excecao3() {
+    getPromiseFulfilled('promiseA fulfilled')
+    .then(function(input) {
+        throw 'Uma exceção foi lançada!';
+    }).done();
+}
+
+// excecao3();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* O primeiro catch na cadeia será executado. */
+function excecao4() {
     var promise = getPromiseFulfilled()
     .then(function() {
         console.log('1');
@@ -211,7 +236,7 @@ function excecao3() {
     });
 }
 
-// excecao3();
+// excecao4();
 
 
 
@@ -222,208 +247,121 @@ function excecao3() {
 
 
 
-/*
-Scenario 7
-===========
-Promises also have a finally function that is like a finally clause.
-*/
-function runScenario7() {
-    console.log('Scenario 7 is running...');
 
-    getPromiseRejected()
-        .finally(
-            function() {
-                console.log('finally is called!');
-            }
-        );
-}
 
-// runScenario7();
 
-/*
-Console output:
----------------
-finally is called!
-*/
 
-/*
-Scenario 8
-===========
-Ending a promise chain makes sure that, if an error doesn’t get
-handled before the end, it will get rethrown and reported.
-*/
-function runScenario8() {
-    console.log('Scenario 8 is running...');
 
-    getPromiseFulfilled('promiseA fulfilled') // promiseA
-        .then( // promiseB
-            function(input) {
-                throw 'Exception at promiseA fulfillment handler';
-            }
-        ).done(); // If not ended the exception is swallowed
-}
 
-// runScenario8();
 
-/*
-Console output:
----------------
-throw e;
-                      ^
-Exception at promiseA fulfillment handler
-*/
 
-/*
-Scenario 9
-===========
-If you have a number of promise-producing functions that need
-to be run sequentially, you can of course do so manually:
-return foo(initialVal).then(bar).then(baz).then(qux);
-*/
-function runScenario9() {
-    console.log('Scenario 9 is running...');
 
+
+/* return foo(initialVal).then(bar).then(baz).then(qux); */
+function encadeamento4() {
     var getPromise1 = function() {
-        return getPromiseFulfilled('promiseA fulfilled') // promiseA
-            .then( // promise B
-                function(info) {
-                    console.log(info);
-                    return getPromiseFulfilled('promiseC fulfilled') // promiseC
-                        .then( // promiseD
-                            console.log
-                        );
-                }
-            );
+        return getPromiseFulfilled('1').then(function(info) {
+            console.log(info);
+            return getPromiseFulfilled('2').then(console.log);
+        });
     };
 
     var getPromise2 = function() {
-        return getPromiseRejected('promiseE rejected') // promiseE
-            .fail( // promiseF
-                console.log
-            );
+        return getPromiseFulfilled('3').then(console.log);
     };
 
     var getPromise3 = function() {
-        return getPromiseFulfilled('promiseG fulfilled') // promiseG
-            .then( // promise H
-                function(info) {
-                    console.log(info);
-                    return getPromiseFulfilled('promiseI fulfilled') // promiseI
-                        .then( // promiseJ
-                            function(info) {
-                                console.log(info);
-                                return getPromiseFulfilled('promiseK fulfilled') // promiseK
-                                    .then( // promiseL
-                                        console.log
-                                    );
-                            }
-                        );
-                }
-            );
+        return getPromiseFulfilled('4').then(function(info) {
+            console.log(info);
+            return getPromiseFulfilled('5').then(function(info) {
+                console.log(info);
+                return getPromiseFulfilled('6').then(console.log);
+            });
+        });
     };
 
     getPromise1().then(getPromise2).then(getPromise3);
 }
 
-// runScenario9();
+// encadeamento4();
 
-/*
-Console output:
----------------
-promiseA fulfilled
-promiseC fulfilled
-promiseE rejected
-promiseG fulfilled
-promiseI fulfilled
-promiseK fulfilled
-*/
 
-/*
-Scenario 10
-===========
-Complex scenario with error propagation
-*/
-function runScenario10() {
-    console.log('Scenario 10 is running...');
 
-    getPromiseRejected('promiseA rejected') // promiseA
-        .then( // promiseB
-            function(reason) {
-                console.log('Unreachable code');
-            } // rejection handler missing (scenario 4)
-        ).then( // promiseC
-            function(info) {
-                console.log('Unreachable code');
-            } // rejection handler missing (scenario 4)
-        ).fail( // promiseD
-            function(reason) { // finally, the promiseA rejection is handled at promiseC rejection handler
-                console.log(reason);
-                return getPromiseFulfilled('PromiseE fulfilled') // promiseD becomes promiseE
-                    .then( // promise F
-                        function() {
-                            return getPromiseRejected('PromiseF rejected');
-                        }
-                    );
-            }
-        ).fail( // promiseG
-            function(reason) { // promiseF rejection handler
-                console.log(reason);
-            }
-        ).finally(
-            function() {
-                console.log('finally is called!');
-            }
-        );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Promises also have a finally function that is like a finally clause. */
+function finally1() {
+    getPromiseRejected()
+        .then(function() {
+            console.log('1');
+        }).then(function() {
+            console.log('2');
+        }).finally(function() {
+            console.log('executando finally...');
+        });
 }
 
-// runScenario10();
+// finally1();
 
-/*
-Console output:
----------------
-Scenario 10 is running...
-promiseA rejected
-PromiseF rejected
-finally is called!
-*/
 
-/*
-Scenario 11
-===========
-Complex scenario ...
-*/
-function runScenario11() {
-    console.log('Scenario 11 is running...');
 
-    getPromiseFulfilled('promiseA fulfilled') // promiseA
-        .then( // promiseB
-            function(reason) {
-                console.log(reason);
-                return getPromiseFulfilled('PromiseC fulfilled'); // promiseB becomes that promise, promiseC
 
-            }
-        ).then( // promiseD
-            function(info) {
-                console.log(info);
-                throw 'promiseD exception';
-            }
-        ).fail( // promiseE
-            function(reason) { // the error raised at promiseC fulfillment handler, is handled at promiseD rejection handler
-                console.log(reason);
-                return getPromiseRejected('PromiseF rejected'); // promiseE becomes that promise, promiseF
-            }
-        ).fail( // promiseG
-            function(reason) { // promiseF rejection handler
-                console.log(reason);
-            }
-        ).finally(
-            function() {
-                console.log('finally is called!');
-            }
-        );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Agora embolou o meio campo! */
+function enbolouOMeioCampo() {
+
+    getPromiseRejected('0 rejected')
+        .then(function(reason) {
+            console.log('1');
+        }).then(function(info) {
+            console.log('2');
+        }).catch(function(reason) {
+            console.log(reason);
+            return getPromiseFulfilled('3 fulfilled')
+                .then(function() {
+                    return getPromiseRejected('4 rejected');
+                });
+        }).catch(function(reason) {
+            console.log(reason);
+        }).finally(function() {
+            console.log('finally foi chamado!');
+        });
 }
 
-// runScenario11();
+enbolouOMeioCampo();
+
 
 /*
 Console output:
