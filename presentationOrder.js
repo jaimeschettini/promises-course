@@ -1,15 +1,19 @@
 console.log('\033c');
 [
-	'sync', 
+	'sync',
+	'syncDBExample',
 	'async', 
 	'callback', 
 	'async2', 
-	'async3', 
+	'async3',
+	'asyncDBExample',
 	'callbackHell', 
 	'callbackHellWithError', 
 	'callbackProblemNoThrow', 
 	'callbackProblemNoThrowCorrect',
-	'callbackProblemNoReturn'
+	'callbackProblemNoReturn',
+	'promisesTransforms',
+	'promisesExamples'
 ].forEach(function(o, i) {
 	console.log(++i, o);
 });

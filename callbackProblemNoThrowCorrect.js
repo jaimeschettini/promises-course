@@ -1,34 +1,43 @@
-var async = require('./callbackOperations');
 
-try {
-	async.operation('operation 1', function (value) {
-		console.log(value);
-		async.operation('operation 2', function (value2) {
-			console.log(value2);
-			async.operation('operation 3', function (value3) {
-				console.log(value3);
-				try {
-					throw Error("Um erro aconteceu!");
-				} catch (e) {
-					console.log("Não priemos cânico, está tudo sob controle.");
-				}			
-				async.operation('operation 4', function (value4) {
-					console.log(value4);
-					async.operation('operation 5', function (value5) {
-						console.log(value5);
-						async.operation('operation 6', function (value6) {
-							console.log(value6);
-							async.operation('operation 7', function (value7) {
-								console.log(value7);
-							});
-						});
-					});
-				});
-			});
-		});
+function getUser(name, callback) {
+	var sql = 'SELECT * FROM users WHERE name=?';
+	query(sql, name, function (error, user) {
+		if (error) {
+			callback(error);  // --> Padrão para retornar erros no callback
+		} else if (!user) {
+			callback(new Error('no user!'));  // --> Padrão para retornar erros no callback
+		} else {
+			callback(null, user);
+		}
 	});
-} catch (e) {
-	console.log("Não priemos cânico, está tudo sob controle.");
 }
 
-// Callback hell ou pyramid of doom
+
+
+// Outro exemplo
+// Síncrono:
+try {
+	var user = getUser('bob esponja');
+	var tweets = getNewTweets(user);
+	updateTimeline(tweets);
+} catch (error) {
+	handleError(error);
+}
+
+
+// Callback
+getUser('bob esponja', function (error, user) {
+	if (error) {
+		handleError(error);
+	} else {
+		getNewTweets(user, function (error, tweets) {
+			if (error) {
+				handleError(error);
+			} else {
+				updateTimeline(tweets, function (error) {
+					if (error) handleError(error);
+				});
+			}
+		});
+	}
+});

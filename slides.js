@@ -5,47 +5,23 @@ module.exports = {
 		'Esse valor pode ser um objeto, número, string etc, ou uma exceção que uma função pode lançar no futuro.',
 		'Mas por que precisamos de promessas?',
 		'Vamos rebobinar a fita...',
-		'<red>Nodejs</red>\n\nFunciona bem nos cenários que usam muito I/O. Não funciona bem para cenários de computação pesada.\n\nUsa muito operações assíncronas.',
-		'O que são operações síncronas?',
-		'O que são operações assíncronas?',
-		'O que é um callback?',
-		'Te imagina com 16 anos, jogando videogame amarradão. Aí tu ficas brocado*. O que tu fazes?\n\n\n\n* <red>Bate aquela fome</red>',
+		'<red>Nodejs</red>\n\nFunciona bem nos cenários que usam muito I/O. Não funciona bem para cenários de computação pesada.\n\nUsa muito operações assíncronas.\n\nBenchmark at PayPal - https://www.paypal-engineering.com/2013/11/22/node-js-at-paypal/',
+		'O que são operações síncronas?\n\n\nnode sync.js\nnode syncDBExample.js',
+		'O que são operações assíncronas?\n\n\nnode async.js',
+
+		'Callbacks. Mas o que é um callback?',
+		'Te imagina com 16 anos, jogando videogame amarradão. Aí tu ficas brocado. O que tu fazes?',
 		'- "Mããããe, faz um misto quente pra mim?!',
 		'...e continua jogando videogame.',
-	    'javascript event loop (usar loup)',
+		'Quando o misto estiver pronto, tu paras de jogar e vai comer.',
+	    'javascript event loop: 1 thread rodando a tua aplicação e outras threads fazendo trabalhos que demoram (http, DOM, acesso a banco de dados)',
 		
-		'Callbacks',
-		'Problemas com o callback',
-		'Callback hell/piramid of doom',
-		'E se o callback lançar um erro?'
-		'No throw',
-		'No return',
+		'Callbacks\n\nnode callback.js\nnode async2.js\nnode async3.js\nnode asyncDBExample.js',
+		'Problemas com o callback:\n\n- Callback hell/piramid of doom\n- Sem throw\n- Sem return\n- Quantas vezes o meu callback será chamado? Ele pode não ser chamado?\n- O argumento de erro é o primeiro ou segundo?',
 
-		'<red>Promises</red>',
-		'Uma <red>promessa</red> é um objeto que representa um valor que ainda não está disponível porque a função que produzirá o valor ainda não terminou. Esse objeto terá um valor <red>no futuro</red>.',
-		'Esse valor pode ser um objeto, número, string etc, ou uma exceção que uma função pode lançar no futuro.',
-		'Promises/A+ Spec (promisesaplus.com)',
-		'then',
-		'then.catch/fail/otherwise',
-		'Encadeamento - then.then.then',
-		'O que acontece se eu lançar uma exceção dentro de uma promise?',	
-		'Erros communs: http://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html',
+		'<red>Promises</red>\n\nUma <red>promessa</red> é um objeto que representa um valor que ainda não está disponível porque a função que produzirá o valor ainda não terminou. Esse objeto terá um valor <red>no futuro</red>.\n\nEsse valor pode ser um objeto, número, string etc, ou uma exceção que uma função pode lançar no futuro.',
+		'Promises\n\n- then\n- then.catch/fail/otherwise\n- then.then.then (encadeamento)\n- Implementações: https://promisesaplus.com/implementations\n- Exemplos',
 		
-		'Nodejs',
-		'Benchmark at PayPal - https://www.paypal-engineering.com/2013/11/22/node-js-at-paypal/',
-		
-		'Desafio para o Palatino:',
-		'- Garantir que não existe nenhuma exceção suprimida (todas as promises devem ter catch ou estar aninhadas e capturar as exceções dos códigos síncronos)',
-		
-		'Referências:',
-		'https://promisesaplus.com/'
-		'http://latentflip.com/loupe/?code=JC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIHNldFRpbWVvdXQoZnVuY3Rpb24gdGltZXIoKSB7CiAgICAgICAgY29uc29sZS5sb2coJ1lvdSBjbGlja2VkIHRoZSBidXR0b24hJyk7ICAgIAogICAgfSwgMjAwMCk7Cn0pOwoKY29uc29sZS5sb2coIkhpISIpOwoKc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0KCkgewogICAgY29uc29sZS5sb2coIkNsaWNrIHRoZSBidXR0b24hIik7Cn0sIDUwMDApOwoKY29uc29sZS5sb2coIldlbGNvbWUgdG8gbG91cGUuIik7!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D',
-		'http://know.cujojs.com/tutorials/async/mastering-async-error-handling-with-promises.html.md',
-
-		'Redemption form callback hell: https://www.youtube.com/watch?v=hf1T_AONQJU&feature=youtu.be',
-		'https://blog.domenic.me/youre-missing-the-point-of-promises/',
-		'http://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html',
-		'https://gist.github.com/jpsoroulas/62668ade41e981a4d7a5',
-		'https://www.promisejs.org/implementing/',
+		'Referências:\n\n- Promises/A+ Spec (promisesaplus.com)\n- http://know.cujojs.com/tutorials/async/mastering-async-error-handling-with-promises.html.md\n- Redemption form callback hell: https://www.youtube.com/watch?v=hf1T_AONQJU&feature=youtu.be\n- https://blog.domenic.me/youre-missing-the-point-of-promises/\n- http://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html\n- https://gist.github.com/jpsoroulas/62668ade41e981a4d7a5',
 	]
 };
