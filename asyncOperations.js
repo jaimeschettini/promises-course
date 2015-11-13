@@ -1,6 +1,6 @@
 module.exports = {
 	operation: function (value) {
-		setTimeout(function () {
+		setTimeout(function () { // --> agendamento
 			console.log(value);
 		}, Math.random() * 100);
 	},

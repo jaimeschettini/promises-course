@@ -6,6 +6,7 @@ async.operation('operation 3');
 
 // Qual o resultado?
 // Qual o problema?
+// Como resolver?
 
 
 
@@ -48,5 +49,5 @@ async.operation('operation 3');
 
 
 
-// Resultado é imprevisível.
+// O resultado é imprevisível.
 // Como resolvemos isso?

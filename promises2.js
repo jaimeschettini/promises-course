@@ -1,13 +1,15 @@
 'use strict';
 var Q = require('q');
+var async = require('./callbackOperations');
+
 
 
 function getPromise(info) {
-    return Q(info || 'inputPromise fulfilled');
+    return Q(info || 'promise fulfilled');
 }
 
 function getPromiseRejected(reason) {
-    return Q.reject(reason || 'inputPromise rejected');
+    return Q.reject(reason || 'promise rejected');
 }
 
 
@@ -25,12 +27,14 @@ function getPromiseRejected(reason) {
 /* Se retornar um valor em um handler, a promessa de fora será cumprida com o valor retornado, 
 ou seja, o valor é passado para a próxima promessa. */
 function encadeamento1() {
-    getPromise()
+    return getPromise()
     .then(function() {
         console.log('Irei retornar um valor');
         return 'Javascript';
     }).then(function(value) {
         console.log('Valor do parâmetro:', value);
+
+        throw new Error('errooooooooooooo');
         return 'Promises';
     }).then(function(value) {
         console.log('Valor do parâmetro:', value);
@@ -39,6 +43,10 @@ function encadeamento1() {
 }
 
 // encadeamento1();
+
+
+
+
 
 
 
@@ -65,27 +73,6 @@ function encadeamento2() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-/* Se a promessa for cumprida e não houver handler, o valor irá para a próxima promessa. */
-function encadeamento3() {
-    getPromise('Retornar isso.')
-    .then()
-    .then(function(value) {
-        console.log('Valor que chegou aqui:', value);
-    });
-}
-
-// encadeamento3();
 
 
 
@@ -161,7 +148,7 @@ function excecao1() {
 
 /* Se lançar uma exceção em um handler e ninguém capturá-la, a exceção é suprimida. */
 function excecao2() {
-    getPromise()
+    getRejectedPromise()
     .then(function() {
         console.log('1');
     }).then(function() {
@@ -280,7 +267,7 @@ function encadeamento4() {
         });
     };
 
-    getPromise1().then(getPromise2).then(getPromise3);
+    getPromise1().then(getPromise2).then(getPromise3).then(console.log);
 }
 
 // encadeamento4();
@@ -317,7 +304,7 @@ function finally1() {
             console.log('2');
         }).finally(function() {
             console.log('executando finally...');
-        });
+        }).done();
 }
 
 // finally1();
@@ -339,28 +326,26 @@ function finally1() {
 
 
 
-/* Agora embolou o meio campo! */
-function enbolouOMeioCampo() {
 
-    getPromiseRejected('0 rejected')
-        .then(function(reason) {
-            console.log('1');
-        }).then(function(info) {
-            console.log('2');
-        }).catch(function(reason) {
-            console.log(reason);
-            return getPromise('3 fulfilled')
-                .then(function() {
-                    return getPromiseRejected('4 rejected');
-                });
-        }).catch(function(reason) {
-            console.log(reason);
-        }).finally(function() {
-            console.log('finally foi chamado!');
+
+
+
+
+function all() {
+    var getAll = function() {
+        var promises = [];
+        [1, 2, 3, 4].forEach(function(n) {
+            promises.push(getPromise(n));
         });
+        return Q.all(promises);
+    }
+
+    getAll().then(function(result) {
+        console.log(result);
+    });
 }
 
-// enbolouOMeioCampo();
+// all();
 
 
 
@@ -369,20 +354,16 @@ function enbolouOMeioCampo() {
 
 
 
-
-
-// Fazer um Q.all
-
-
-
-
-
-
-
-
-
-
-
+// Palatino
+var inserir = function (diarioPalatino, aulasAsp) {
+    var promises = [];
+    aulasAsp.forEach(function(aulaAsp) {
+        if (!contemAulaAsp(diarioPalatino.aulas, aulaAsp)) {
+            promises.push(salvarAulaNoDiarion(diarioPalatino, aulaAsp));
+        }
+    });
+    return when.all(promises);
+};
 
 
 
@@ -390,13 +371,14 @@ function enbolouOMeioCampo() {
 
 /* Adiamento (deferred). Para criar uma promessa. */
 function deferred() {
-
     var deferredPromise = function () {
         var deferred = Q.defer();
 
-        getPromise().then(function() {
-            getPromise().then(function() {
-                deferred.resolve('um valor qualquer');
+        async.operation('operation 1', function (value) {
+            async.operation('operation 2', function (value2) {
+                async.operation('operation 3', function (value3) {
+                    deferred.resolve(value3);
+                });
             });
         });
         
@@ -408,4 +390,4 @@ function deferred() {
     });
 }
 
-deferred();
+// deferred();

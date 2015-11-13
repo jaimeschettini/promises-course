@@ -1,5 +1,37 @@
 // Exemplos retirados da apresentação Redemption from callback hell: https://www.youtube.com/watch?v=hf1T_AONQJU&feature=youtu.be
 
+
+/*
+Estados de uma promessa:
+ - Pendente (estado inicial)
+ - Cumprida (fullfiled)
+ - Rejeitada (rejected)
+*/
+
+getUser('bob esponja').then(onFullfiled, onRejected);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 getUser('bob esponja', function (error, user) {
 	// ...
 });
@@ -7,12 +39,42 @@ getUser('bob esponja', function (error, user) {
 // se transforma em:
 
 getUser('bob esponja').then(function (user) {
-	// ...
+	// promessa cumprida
 }, function (error) {
-	// ...
+	// promessa rejeitada
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Versão mais legível: açúcar síntático!
+getUser('bob esponja')
+	.then(function (user) {
+		// promessa cumprida
+	})
+	.catch(function (error) {
+		// promessa rejeitada
+	});
 
 
 
@@ -48,16 +110,38 @@ getUser('bob esponja').then(function (user) {
 
 
 
+
+
+
+
+
+
+
+
+
 var user = getUser('bob esponja');
-if (!user) throw new Error('no user!');
+if (!user) {
+	throw new Error('no user!');
+}
 return user.name;
 
 // se transforma em:
 
 getUser('bob esponja').then(function (user) {
-	if (!user) throw new Error('no user!');
+	if (!user) {
+		throw new Error('no user!');
+	}
 	return user.name;
 });
+
+
+
+
+
+
+
+
+
 
 
 
@@ -75,7 +159,7 @@ try {
 // se transforma em:
 
 deliverTweetTo(tweet, 'bob esponja')
-	.then(undefined, handleError);
+	.catch(handleError);
 
 
 
@@ -99,9 +183,12 @@ try {
 // se transforma em:
 
 getUser('bob esponja')
-	.then(getNewTweets)
+	.then(function(user) {
+		
+		getNewTweets(user);
+	})
 	.then(updateTimeline)
-	.then(undefined, handleError);
+	.catch(handleError);
 
 
 

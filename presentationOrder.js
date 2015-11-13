@@ -12,8 +12,8 @@ console.log('\033c');
 	'callbackProblemNoThrow', 
 	'callbackProblemNoThrowCorrect',
 	'callbackProblemNoReturn',
-	'promisesTransforms',
-	'promisesExamples'
+	'promises1',
+	'promises2'
 ].forEach(function(o, i) {
 	console.log(++i, o);
 });
